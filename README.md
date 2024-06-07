@@ -1,4 +1,4 @@
-# Opsdroid skill GoogleCalendar
+# Opsdroid skill Google Calendar
 A skill for opsdroid to connect with your Google Calendar and see your upcoming events
 
 ## Requirements
