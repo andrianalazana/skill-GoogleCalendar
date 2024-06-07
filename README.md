@@ -23,3 +23,19 @@ A skill for opsdroid to connect with your Google Calendar and see your upcoming 
 ~~~
 pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
 ~~~
+## Configuration
+```yaml
+googlecalendar:
+    path: # your path to __init__.py
+    creds_path: # your path to credentials.json
+```
+## Usage
+
+#### `What are the upcoming 2 events?`
+
+> user: What are the upcoming 2 events?
+>
+> Your two upcoming events are:
+- 2024-06-12T16:00:00+03:00: Meeting with partners
+- 2024-06-12T22:00:00+03:00: Yoga Session
+
