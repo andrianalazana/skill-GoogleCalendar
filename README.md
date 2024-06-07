@@ -34,8 +34,10 @@ googlecalendar:
 #### `What are the upcoming 2 events?`
 
 > user: What are the upcoming 2 events?
->
+
 > Opsdroid: Your two upcoming events are:
-> Opsdroid: 2024-06-12T16:00:00+03:00: Meeting with partners
-> Opsdroid: 2024-06-12T22:00:00+03:00: Yoga Session
+>
+> 2024-06-12T16:00:00+03:00: Meeting with partners
+>
+> 2024-06-12T22:00:00+03:00: Yoga Session
 
