@@ -3,8 +3,8 @@ A skill for opsdroid to connect with your Google Calendar and see your upcoming 
 
 ## Requirements
 - Have a Google account with Google Calendar enabled.
-- Create your Google Cloud project. Follow the steps you will se [here](https://developers.google.com/workspace/guides/create-project)
-- [Enable the API](https://console.cloud.google.com/flows/enableapi?apiid=calendar-json.googleapis.com) on your Google Cloud projecte.
+- Create your Google Cloud project. Follow the steps you will see [here](https://developers.google.com/workspace/guides/create-project)
+- [Enable the API](https://console.cloud.google.com/flows/enableapi?apiid=calendar-json.googleapis.com) on your Google Cloud project.
 - Configure the OAuth consent screen:
     1. In the Google Cloud console, go to Menu menu > APIs & Services > [OAuth consent screen](https://console.cloud.google.com/apis/credentials/consent).
     2. For User type select Internal, then click Create.
