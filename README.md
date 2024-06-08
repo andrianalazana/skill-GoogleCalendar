@@ -26,7 +26,7 @@ pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-
 ## Configuration
 ```yaml
 googlecalendar:
-    path: # your path to __init__.py
+    path: # your local path to __init__.py
     creds_path: # your path to credentials.json
 ```
 ## Usage
