@@ -15,8 +15,8 @@ class Calendar(Skill):
         super().__init__(opsdroid, config)
         self.creds_path = config.get("creds_path")
 
-    @match_regex(r"What are my next 2 upcoming events?")
-    async def upcomingEvents(self, message):
+    
+    def authentication(self):
         creds = None
         SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"]
 
@@ -29,8 +29,13 @@ class Calendar(Skill):
             # Save the credentials for the next run
             with open("token.json", "w") as token:
                 token.write(creds.to_json())
-    
+        
+        return creds
+
+    @match_regex(r"What are my next 2 upcoming events?")
+    async def upcomingEvents(self, message):
         try:
+            creds = self.authentication()
             service = build("calendar", "v3", credentials=creds)
 
             # Call the Calendar API
@@ -56,8 +61,8 @@ class Calendar(Skill):
                     start_dt = dt.datetime.fromisoformat(event["start"].get("dateTime", event["start"].get("date"))).astimezone()
                     end_dt = dt.datetime.fromisoformat(event["end"].get("dateTime", event["end"].get("date"))).astimezone()
                     
-                    start_time = start_dt.strftime("%H:%M")  # e.g., 09:00
-                    end_time = end_dt.strftime("%H:%M")  # e.g., 10:00
+                    start_time = start_dt.strftime("%H:%M")  
+                    end_time = end_dt.strftime("%H:%M") 
                     summary = event["summary"]
 
                     if start_time == "00:00" and end_time == "00:00":
@@ -73,19 +78,8 @@ class Calendar(Skill):
     
     @match_regex(r"Give me my events on (\d{2}-\d{2}-\d{4})$")
     async def eventDetails(self, message):
-        creds = None
-        SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"]
-        if os.path.exists("token.json"):
-            creds = Credentials.from_authorized_user_file("token.json")
-
-        if not creds or not creds.valid:
-            flow = InstalledAppFlow.from_client_secrets_file(self.creds_path, SCOPES)
-            creds = flow.run_local_server(port=0)
-            # Save the credentials for the next run
-            with open("token.json", "w") as token:
-                token.write(creds.to_json())
-
         try:
+            creds = self.authentication()
             date_str = message.regex.group(1)
             service = build("calendar", "v3", credentials=creds)
             date = dt.datetime.strptime(date_str, "%d-%m-%Y").date()
