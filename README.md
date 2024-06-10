@@ -1,5 +1,9 @@
 # Opsdroid skill Google Calendar
-A skill for Opsdroid that connects to your Google Calendar to display your upcoming events. Use this as a foundation for creating more Google Calendar skills, such as showing events for a specific day, and more!
+A skill for Opsdroid that connects to your Google Calendar to display 
+1. Your upcoming events
+2. Your events for a specific day
+
+Use this as a foundation for creating more Google Calendar skills, such as adding new events, and more!
 
 ## Requirements
 - Have a Google account with Google Calendar enabled.
@@ -31,13 +35,22 @@ googlecalendar:
 ```
 ## Usage
 
-#### `What are the upcoming 2 events?`
+### 1.  `What are the upcoming 2 events?`
 
 > user: What are the upcoming 2 events?
 
 > Opsdroid: Your two upcoming events are:
 >
-> 2024-06-12T16:00:00+03:00: Meeting with partners
+> 1. At Tuesday 11 June 2024-13:30-14:30 you have Yoga Session. 
 >
-> 2024-06-12T22:00:00+03:00: Yoga Session
+> 2. At Wednesday 12 June 2024-16:00-17:00 you have Meeting with partners.
+
+### 2. `Give me the events on 10-07-2024`
+
+> Opsdroid: Events on Wednesday 10 July 2024:
+>
+> 1. At 16:00-17:00 you have Doctor Appointment.
+>
+> 2. At 22:00-23:00 you have Meeting at work.
+
 
