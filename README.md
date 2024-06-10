@@ -35,7 +35,7 @@ googlecalendar:
 ```
 ## Usage
 
-### 1.  `What are the upcoming 2 events?`
+### 1.  `What are my next 2 upcoming events?`
 
 > user: What are the upcoming 2 events?
 
@@ -45,7 +45,7 @@ googlecalendar:
 >
 > 2. At Wednesday 12 June 2024-16:00-17:00 you have Meeting with partners.
 
-### 2. `Give me the events on 10-07-2024`
+### 2. `Give me my events on 10-07-2024`
 
 > Opsdroid: Events on Wednesday 10 July 2024:
 >
