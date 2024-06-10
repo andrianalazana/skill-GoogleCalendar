@@ -1,5 +1,5 @@
 # Opsdroid skill Google Calendar
-A skill for opsdroid to connect with your Google Calendar and see your upcoming events
+A skill for Opsdroid that connects to your Google Calendar to display your upcoming events. Use this as a foundation for creating more Google Calendar skills, such as showing events for a specific day, and more!
 
 ## Requirements
 - Have a Google account with Google Calendar enabled.
