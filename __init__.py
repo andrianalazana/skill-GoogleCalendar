@@ -15,7 +15,7 @@ class Calendar(Skill):
         super().__init__(opsdroid, config)
         self.creds_path = config.get("creds_path")
 
-    @match_regex(r"What are the upcoming 2 events?")
+    @match_regex(r"What are my next 2 upcoming events?")
     async def upcomingEvents(self, message):
         creds = None
         SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"]
@@ -71,7 +71,7 @@ class Calendar(Skill):
             response = (f"An error occurred: {error}")
 
     
-    @match_regex(r"Give me the events on (\d{2}-\d{2}-\d{4})$")
+    @match_regex(r"Give me my events on (\d{2}-\d{2}-\d{4})$")
     async def eventDetails(self, message):
         creds = None
         SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"]
