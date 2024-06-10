@@ -50,12 +50,81 @@ class Calendar(Skill):
 
             if not events:
                 response = "No upcoming events found."
+            else:
+                response = f"The two upcoming events are:"
+                for i, event in enumerate(events, start=1):
+                    start_dt = dt.datetime.fromisoformat(event["start"].get("dateTime", event["start"].get("date"))).astimezone()
+                    end_dt = dt.datetime.fromisoformat(event["end"].get("dateTime", event["end"].get("date"))).astimezone()
+                    
+                    start_time = start_dt.strftime("%H:%M")  # e.g., 09:00
+                    end_time = end_dt.strftime("%H:%M")  # e.g., 10:00
+                    summary = event["summary"]
 
-            # Respond with the start and name of the next 10 events
-            for event in events:
-                start = event["start"].get("dateTime", event["start"].get("date"))
-                response = (start, event["summary"])
-                await message.respond("{}".format(response)) 
+                    if start_time == "00:00" and end_time == "00:00":
+                        response += f"\n {i} Today is: {summary}"
+                    else:
+                        response += f"\n {i}. At {start_dt.strftime('%A %d %B %Y')}-{start_time}-{end_time} you have {summary}."
+
+            await message.respond("{}".format(response))  
+
+        except HttpError as error:
+            response = (f"An error occurred: {error}")
+
+    
+    @match_regex(r"Give me the events on (\d{2}-\d{2}-\d{4})$")
+    async def eventDetails(self, message):
+        creds = None
+        SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"]
+        if os.path.exists("token.json"):
+            creds = Credentials.from_authorized_user_file("token.json")
+
+        if not creds or not creds.valid:
+            flow = InstalledAppFlow.from_client_secrets_file(self.creds_path, SCOPES)
+            creds = flow.run_local_server(port=0)
+            # Save the credentials for the next run
+            with open("token.json", "w") as token:
+                token.write(creds.to_json())
+
+        try:
+            date_str = message.regex.group(1)
+            service = build("calendar", "v3", credentials=creds)
+            date = dt.datetime.strptime(date_str, "%d-%m-%Y").date()
+            start_of_day = dt.datetime.combine(date, dt.time.min).isoformat() + 'Z'
+            end_of_day = dt.datetime.combine(date, dt.time.max).isoformat() + 'Z'
+
+            # Call the Calendar API
+            events_result = (
+                service.events()
+                .list(
+                    calendarId="primary",
+                    timeMin=start_of_day,
+                    timeMax=end_of_day,
+                    maxResults=100,
+                    singleEvents=True,
+                    orderBy="startTime",
+                )
+                .execute()
+            )
+            events = events_result.get("items", [])
+
+            if not events:
+                response = "No upcoming events found."
+            else:
+                response = f"Events on {date.strftime('%A %d %B %Y')}:"
+                for i, event in enumerate(events, start=1):
+                    start_dt = dt.datetime.fromisoformat(event["start"].get("dateTime", event["start"].get("date"))).astimezone()
+                    end_dt = dt.datetime.fromisoformat(event["end"].get("dateTime", event["end"].get("date"))).astimezone()
+                    
+                    start_time = start_dt.strftime("%H:%M")  # e.g., 09:00
+                    end_time = end_dt.strftime("%H:%M")  # e.g., 10:00
+                    summary = event["summary"]
+
+                    if start_time == "00:00" and end_time == "00:00":
+                        response += f"\n {i} Today is: {summary}"
+                    else:
+                        response += f"\n {i}. At {start_time}-{end_time} you have {summary}."
+
+            await message.respond("{}".format(response)) 
 
         except HttpError as error:
             response = (f"An error occurred: {error}")
