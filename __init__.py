@@ -39,7 +39,7 @@ class Calendar(Skill):
             service = build("calendar", "v3", credentials=creds)
 
             # Call the Calendar API
-            now = dt.datetime.utcnow().isoformat() + "Z"  # 'Z' indicates UTC time
+            now = dt.datetime.utcnow().isoformat() + "Z"  
             events_result = (
                 service.events()
                 .list(
@@ -109,8 +109,8 @@ class Calendar(Skill):
                     start_dt = dt.datetime.fromisoformat(event["start"].get("dateTime", event["start"].get("date"))).astimezone()
                     end_dt = dt.datetime.fromisoformat(event["end"].get("dateTime", event["end"].get("date"))).astimezone()
                     
-                    start_time = start_dt.strftime("%H:%M")  # e.g., 09:00
-                    end_time = end_dt.strftime("%H:%M")  # e.g., 10:00
+                    start_time = start_dt.strftime("%H:%M") 
+                    end_time = end_dt.strftime("%H:%M")  
                     summary = event["summary"]
 
                     if start_time == "00:00" and end_time == "00:00":
